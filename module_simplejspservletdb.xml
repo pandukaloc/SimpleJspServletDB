@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_simplejspservletdb" default="compile.module.simplejspservletdb">
+  <dirname property="module.simplejspservletdb.basedir" file="${ant.file.module_simplejspservletdb}"/>
+  
+  <property name="module.jdk.home.simplejspservletdb" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.simplejspservletdb" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.simplejspservletdb" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.simplejspservletdb" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="simplejspservletdb.output.dir" value="${module.simplejspservletdb.basedir}/../../Process Definitions/SimpleJspServletDB/build/classes"/>
+  <property name="simplejspservletdb.testoutput.dir" value="${module.simplejspservletdb.basedir}/../../Process Definitions/SimpleJspServletDB/build/classes"/>
+  
+  <path id="simplejspservletdb.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="simplejspservletdb.module.production.classpath">
+    <path refid="${module.jdk.classpath.simplejspservletdb}"/>
+    <path refid="library.eclipse.classpath"/>
+  </path>
+  
+  <path id="simplejspservletdb.runtime.production.module.classpath">
+    <pathelement location="${simplejspservletdb.output.dir}"/>
+    <path refid="library.eclipse.classpath"/>
+  </path>
+  
+  <path id="simplejspservletdb.module.classpath">
+    <pathelement location="${simplejspservletdb.output.dir}"/>
+    <path refid="${module.jdk.classpath.simplejspservletdb}"/>
+    <path refid="library.eclipse.classpath"/>
+  </path>
+  
+  <path id="simplejspservletdb.runtime.module.classpath">
+    <pathelement location="${simplejspservletdb.output.dir}"/>
+    <path refid="library.eclipse.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.simplejspservletdb">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.simplejspservletdb">
+    <patternset refid="excluded.from.module.simplejspservletdb"/>
+  </patternset>
+  
+  <path id="simplejspservletdb.module.sourcepath">
+    <dirset dir="${module.simplejspservletdb.basedir}/../../Process Definitions/SimpleJspServletDB">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.simplejspservletdb" depends="compile.module.simplejspservletdb.production,compile.module.simplejspservletdb.tests" description="Compile module SimpleJspServletDB"/>
+  
+  <target name="compile.module.simplejspservletdb.production" depends="register.custom.compilers" description="Compile module SimpleJspServletDB; production classes">
+    <mkdir dir="${simplejspservletdb.output.dir}"/>
+    <javac2 destdir="${simplejspservletdb.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.simplejspservletdb}/javac">
+      <compilerarg line="${compiler.args.simplejspservletdb}"/>
+      <bootclasspath refid="simplejspservletdb.module.bootclasspath"/>
+      <classpath refid="simplejspservletdb.module.production.classpath"/>
+      <src refid="simplejspservletdb.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.simplejspservletdb"/>
+    </javac2>
+    
+    <copy todir="${simplejspservletdb.output.dir}">
+      <fileset dir="${module.simplejspservletdb.basedir}/../../Process Definitions/SimpleJspServletDB/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.simplejspservletdb.tests" depends="register.custom.compilers,compile.module.simplejspservletdb.production" description="compile module SimpleJspServletDB; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.simplejspservletdb" description="cleanup module">
+    <delete dir="${simplejspservletdb.output.dir}"/>
+    <delete dir="${simplejspservletdb.testoutput.dir}"/>
+  </target>
+</project>
